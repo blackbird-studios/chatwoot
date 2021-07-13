@@ -68,6 +68,11 @@
         >
           <chat-footer />
         </div>
+        <team-availability
+          v-if="currentView === 'cardView'"
+          :available-agents="availableAgents"
+          @start-conversation="startConversation"
+        />
       </transition>
     </div>
   </div>
