@@ -14,7 +14,7 @@
           />
         </div>
         <div class="text-xs mt-1 text-black-700">
-          {{ replyWaitMeessage }}
+          Online
         </div>
       </div>
     </div>

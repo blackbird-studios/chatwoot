@@ -10,7 +10,7 @@
           }}
         </div>
         <div class="text-xs leading-4 mt-1">
-          {{ replyWaitMeessage }}
+          Online
         </div>
       </div>
       <available-agents v-if="isOnline" :agents="availableAgents" />
