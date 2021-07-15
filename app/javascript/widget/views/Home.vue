@@ -220,6 +220,7 @@ export default {
     display: flex;
     flex-direction: column;
     position: relative;
+    padding-bottom: 1rem;
 
     &:before {
       content: '';
