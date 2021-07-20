@@ -20,7 +20,7 @@ class Api::V1::Widget::MessagesController < Api::V1::Widget::BaseController
       @message.update!(message_update_params[:message])
     end
   rescue StandardError => e
-    render json: { error: @contact.errors, message: e.message }.to_json, status: 500
+    render json: { error: @contact.errors, message: e.message }.to_json, status: :internal_server_error
   end
 
   private
@@ -54,10 +54,11 @@ class Api::V1::Widget::MessagesController < Api::V1::Widget::BaseController
   end
 
   def message_update_params
-    params.permit(message: [{ submitted_values: [:name, :title, :value] }])
+    params.permit(message: [{ submitted_values: [:name, :title, :value, { csat_survey_response: [:feedback_message, :rating] }] }])
   end
 
   def permitted_params
+    # timestamp parameter is used in create conversation method
     params.permit(:id, :before, :website_token, contact: [:name, :email], message: [:content, :referer_url, :timestamp, :echo_id])
   end
 
