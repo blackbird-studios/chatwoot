@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.7.2'
+ruby '2.7.3'
 
 ##-- base gems for rails --##
 gem 'rack-cors', require: 'rack/cors'
@@ -53,12 +53,14 @@ gem 'activerecord-import'
 gem 'dotenv-rails'
 gem 'foreman'
 gem 'puma'
+gem 'rack-timeout'
 gem 'webpacker', '~> 5.x'
 # metrics on heroku
 gem 'barnes'
 
 ##--- gems for authentication & authorization ---##
 gem 'devise'
+gem 'devise-secure_password', '~> 2.0'
 gem 'devise_token_auth'
 # authorization
 gem 'jwt'
@@ -72,7 +74,7 @@ gem 'wisper', '2.0.0'
 
 ##--- gems for channels ---##
 # TODO: bump up gem to 2.0
-gem 'facebook-messenger', '1.5.0'
+gem 'facebook-messenger'
 gem 'telegram-bot-ruby'
 gem 'twilio-ruby', '~> 5.32.0'
 # twitty will handle subscription of twitter account events
@@ -132,8 +134,6 @@ group :test do
 end
 
 group :development, :test do
-  # locking until https://github.com/codeclimate/test-reporter/issues/418 is resolved
-  gem 'action-cable-testing'
   gem 'bundle-audit', require: false
   gem 'byebug', platform: :mri
   gem 'factory_bot_rails'

@@ -49,6 +49,7 @@ class Conversation < ApplicationRecord
 
   scope :latest, -> { order(last_activity_at: :desc) }
   scope :unassigned, -> { where(assignee_id: nil) }
+  scope :assigned, -> { where.not(assignee_id: nil) }
   scope :assigned_to, ->(agent) { where(assignee_id: agent.id) }
 
   belongs_to :account
@@ -60,6 +61,8 @@ class Conversation < ApplicationRecord
   belongs_to :campaign, optional: true
 
   has_many :messages, dependent: :destroy, autosave: true
+  has_one :csat_survey_response, dependent: :destroy
+  has_many :notifications, as: :primary_actor, dependent: :destroy
 
   before_create :set_bot_conversation
 
