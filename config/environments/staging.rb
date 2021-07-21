@@ -95,6 +95,8 @@ Rails.application.configure do
     allow do
       origins '*'
       resource '/api/v1/widget/*', headers: :any, methods: [:get, :post, :patch, :put, :options]
+      resource '/public/api/*', headers: :any, methods: [:get, :post, :patch, :put, :options]
+      resource '/api/*', headers: :any, methods: [:get, :post, :patch, :put, :options]
     end
   end
 end

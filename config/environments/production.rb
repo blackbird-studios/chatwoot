@@ -128,6 +128,7 @@ Rails.application.configure do
     allow do
       origins '*'
       resource '/api/*', headers: :any, methods: [:get, :post, :patch, :put, :options]
+      resource '/public/api/*', headers: :any, methods: [:get, :post, :patch, :put, :options]
     end
   end
 end
