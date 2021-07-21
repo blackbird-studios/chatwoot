@@ -1,6 +1,7 @@
 class Api::V1::Widget::BaseController < ApplicationController
   include SwitchLocale
 
+  protect_from_forgery with: :null_session
   before_action :set_web_widget
   before_action :set_contact
 
@@ -92,6 +93,10 @@ class Api::V1::Widget::BaseController < ApplicationController
 
   def timestamp_params
     { timestamp: permitted_params[:message][:timestamp] }
+  end
+
+  def permitted_params
+    params.permit(:website_token)
   end
 
   def message_params

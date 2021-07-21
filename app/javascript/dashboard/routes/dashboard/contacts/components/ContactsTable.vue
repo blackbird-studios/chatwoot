@@ -14,6 +14,10 @@
       v-if="showSearchEmptyState"
       :title="$t('CONTACTS_PAGE.LIST.404')"
     />
+    <empty-state
+      v-else-if="!isLoading && !contacts.length"
+      :title="$t('CONTACTS_PAGE.LIST.NO_CONTACTS')"
+    />
     <div v-if="isLoading" class="contacts--loader">
       <spinner />
       <span>{{ $t('CONTACTS_PAGE.LIST.LOADING_MESSAGE') }}</span>
@@ -94,7 +98,7 @@ export default {
           profiles: additional.social_profiles || {},
           city: additional.city || '---',
           country: additional.country || '---',
-          conversations_count: item.conversations_count || '---',
+          conversationsCount: item.conversations_count || '---',
           last_activity_at: lastActivityAt
             ? this.dynamicTime(lastActivityAt)
             : '---',
@@ -114,13 +118,12 @@ export default {
           renderBodyCell: ({ row }) => (
             <woot-button
               variant="clear"
-              size="expanded"
               onClick={() => this.onClickContact(row.id)}
             >
               <div class="row--user-block">
                 <Thumbnail
                   src={row.thumbnail}
-                  size="36px"
+                  size="32px"
                   username={row.name}
                   status={row.availability_status}
                 />
@@ -128,7 +131,7 @@ export default {
                   <h6 class="sub-block-title user-name text-truncate">
                     {row.name}
                   </h6>
-                  <span class="button clear small">
+                  <span class="button clear small link">
                     {this.$t('CONTACTS_PAGE.LIST.VIEW_DETAILS')}
                   </span>
                 </div>
@@ -292,7 +295,7 @@ export default {
   }
 
   .ve-table-body-td {
-    padding: var(--space-slab) var(--space-two) !important;
+    padding: var(--space-small) var(--space-two) !important;
   }
 
   .ve-table-header-th {

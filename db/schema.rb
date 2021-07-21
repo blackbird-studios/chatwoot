@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_13_083044) do
+ActiveRecord::Schema.define(version: 2021_07_14_110714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -97,7 +97,8 @@ ActiveRecord::Schema.define(version: 2021_05_13_083044) do
     t.string "outgoing_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "hide_input_for_bot_conversations", default: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_agent_bots_on_account_id"
   end
 
   create_table "attachments", id: :serial, force: :cascade do |t|
@@ -125,8 +126,15 @@ ActiveRecord::Schema.define(version: 2021_05_13_083044) do
     t.jsonb "trigger_rules", default: {}
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "campaign_type", default: 0, null: false
+    t.integer "campaign_status", default: 0, null: false
+    t.jsonb "audience", default: []
+    t.datetime "scheduled_at"
     t.index ["account_id"], name: "index_campaigns_on_account_id"
+    t.index ["campaign_status"], name: "index_campaigns_on_campaign_status"
+    t.index ["campaign_type"], name: "index_campaigns_on_campaign_type"
     t.index ["inbox_id"], name: "index_campaigns_on_inbox_id"
+    t.index ["scheduled_at"], name: "index_campaigns_on_scheduled_at"
   end
 
   create_table "canned_responses", id: :serial, force: :cascade do |t|
@@ -142,6 +150,11 @@ ActiveRecord::Schema.define(version: 2021_05_13_083044) do
     t.string "webhook_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "identifier"
+    t.string "hmac_token"
+    t.boolean "hmac_mandatory", default: false
+    t.index ["hmac_token"], name: "index_channel_api_on_hmac_token", unique: true
+    t.index ["identifier"], name: "index_channel_api_on_identifier", unique: true
   end
 
   create_table "channel_email", force: :cascade do |t|
@@ -200,6 +213,7 @@ ActiveRecord::Schema.define(version: 2021_05_13_083044) do
     t.string "hmac_token"
     t.boolean "pre_chat_form_enabled", default: false
     t.jsonb "pre_chat_form_options", default: {}
+    t.boolean "hmac_mandatory", default: false
     t.index ["hmac_token"], name: "index_channel_web_widgets_on_hmac_token", unique: true
     t.index ["website_token"], name: "index_channel_web_widgets_on_website_token", unique: true
   end
@@ -258,6 +272,35 @@ ActiveRecord::Schema.define(version: 2021_05_13_083044) do
     t.index ["campaign_id"], name: "index_conversations_on_campaign_id"
     t.index ["contact_inbox_id"], name: "index_conversations_on_contact_inbox_id"
     t.index ["team_id"], name: "index_conversations_on_team_id"
+  end
+
+  create_table "csat_survey_responses", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "conversation_id", null: false
+    t.bigint "message_id", null: false
+    t.integer "rating", null: false
+    t.text "feedback_message"
+    t.bigint "contact_id", null: false
+    t.bigint "assigned_agent_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_csat_survey_responses_on_account_id"
+    t.index ["assigned_agent_id"], name: "index_csat_survey_responses_on_assigned_agent_id"
+    t.index ["contact_id"], name: "index_csat_survey_responses_on_contact_id"
+    t.index ["conversation_id"], name: "index_csat_survey_responses_on_conversation_id"
+    t.index ["message_id"], name: "index_csat_survey_responses_on_message_id", unique: true
+  end
+
+  create_table "custom_filters", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "filter_type", default: 0, null: false
+    t.jsonb "query", default: "{}", null: false
+    t.bigint "account_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_custom_filters_on_account_id"
+    t.index ["user_id"], name: "index_custom_filters_on_user_id"
   end
 
   create_table "data_imports", force: :cascade do |t|
@@ -321,6 +364,8 @@ ActiveRecord::Schema.define(version: 2021_05_13_083044) do
     t.boolean "working_hours_enabled", default: false
     t.string "out_of_office_message"
     t.string "timezone", default: "UTC"
+    t.boolean "enable_email_collect", default: true
+    t.boolean "csat_survey_enabled", default: false
     t.index ["account_id"], name: "index_inboxes_on_account_id"
   end
 
@@ -427,6 +472,18 @@ ActiveRecord::Schema.define(version: 2021_05_13_083044) do
     t.index ["inbox_id"], name: "index_messages_on_inbox_id"
     t.index ["sender_type", "sender_id"], name: "index_messages_on_sender_type_and_sender_id"
     t.index ["source_id"], name: "index_messages_on_source_id"
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.text "content", null: false
+    t.bigint "account_id", null: false
+    t.bigint "contact_id", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_notes_on_account_id"
+    t.index ["contact_id"], name: "index_notes_on_contact_id"
+    t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
   create_table "notification_settings", force: :cascade do |t|
@@ -611,6 +668,7 @@ ActiveRecord::Schema.define(version: 2021_05_13_083044) do
   add_foreign_key "account_users", "accounts"
   add_foreign_key "account_users", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "agent_bots", "accounts"
   add_foreign_key "campaigns", "accounts"
   add_foreign_key "campaigns", "inboxes"
   add_foreign_key "contact_inboxes", "contacts"
@@ -618,7 +676,15 @@ ActiveRecord::Schema.define(version: 2021_05_13_083044) do
   add_foreign_key "conversations", "campaigns"
   add_foreign_key "conversations", "contact_inboxes"
   add_foreign_key "conversations", "teams"
+  add_foreign_key "csat_survey_responses", "accounts"
+  add_foreign_key "csat_survey_responses", "contacts"
+  add_foreign_key "csat_survey_responses", "conversations"
+  add_foreign_key "csat_survey_responses", "messages"
+  add_foreign_key "csat_survey_responses", "users", column: "assigned_agent_id"
   add_foreign_key "data_imports", "accounts"
+  add_foreign_key "notes", "accounts"
+  add_foreign_key "notes", "contacts"
+  add_foreign_key "notes", "users"
   add_foreign_key "team_members", "teams"
   add_foreign_key "team_members", "users"
   add_foreign_key "teams", "accounts"

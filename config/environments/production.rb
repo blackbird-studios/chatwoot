@@ -21,6 +21,9 @@ Rails.application.configure do
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch('RAILS_SERVE_STATIC_FILES', true))
+  config.public_file_server.headers = {
+    'Cache-Control' => "public, max-age=#{1.year.to_i}"
+  }
   # Compress JavaScripts and CSS.
   # config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
@@ -113,10 +116,18 @@ Rails.application.configure do
 
   # font cors issue with CDN
   # Ref: https://stackoverflow.com/questions/56960709/rails-font-cors-policy
+  # ref: https://github.com/cyu/rack-cors
   config.middleware.insert_before 0, Rack::Cors do
     allow do
       origins '*'
       resource '/packs/*', headers: :any, methods: [:get, :options]
+      if ActiveModel::Type::Boolean.new.cast(ENV.fetch('CW_API_ONLY_SERVER', false))
+        resource '*', headers: :any, methods: :any, expose: ['access-token', 'client', 'uid', 'expiry']
+      end
+    end
+    allow do
+      origins '*'
+      resource '/api/*', headers: :any, methods: [:get, :post, :patch, :put, :options]
     end
   end
 end

@@ -3,17 +3,9 @@
     <div class="flex items-center justify-between mb-4">
       <div class="text-black-700">
         <div class="text-base leading-5 font-medium mb-1">
-          {{
-            isOnline
-              ? $t('TEAM_AVAILABILITY.ONLINE')
-              : $t('TEAM_AVAILABILITY.OFFLINE')
-          }}
-        </div>
-        <div class="text-xs leading-4 mt-1">
-          {{ replyWaitMeessage }}
+          Online
         </div>
       </div>
-      <available-agents v-if="isOnline" :agents="availableAgents" />
     </div>
     <custom-button
       class="font-medium"
@@ -29,8 +21,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { getContrastingTextColor } from '@chatwoot/utils';
 import AvailableAgents from 'widget/components/AvailableAgents.vue';
-import { getContrastingTextColor } from 'shared/helpers/ColorHelper';
 import CustomButton from 'shared/components/Button';
 import configMixin from 'widget/mixins/configMixin';
 import availabilityMixin from 'widget/mixins/availability';

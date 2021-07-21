@@ -5,14 +5,15 @@
   &.round {
     border-radius: 1000px;
   }
+}
 
-  &.grey-btn {
-    color: $color-gray;
+.card {
+  margin-bottom: var(--space-small);
+  padding: var(--space-small);
+}
 
-    &:hover {
-      color: $color-light-gray;
-    }
-  }
+.button-wrapper .button.link.grey-btn {
+  margin-left: var(--space-normal);
 }
 
 .tooltip {
@@ -41,6 +42,14 @@ code {
   white-space: nowrap;
 }
 
+.text-capitalize {
+  text-transform: capitalize;
+}
+
 .cursor-pointer {
   cursor: pointer;
+}
+// remove when grid gutters are fixed
+.columns.with-right-space {
+  padding-right: var(--space-normal);
 }
