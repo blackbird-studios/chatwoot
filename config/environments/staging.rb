@@ -38,6 +38,8 @@ Rails.application.configure do
   # config.action_cable.mount_path = nil
   # config.action_cable.url = 'wss://example.com/cable'
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
+  config.action_cable.disable_request_forgery_protection = true
+  config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/, /file:\/\/*/, 'file://', nil]
 
   # config.action_controller.forgery_protection_origin_check = false
 
@@ -93,6 +95,8 @@ Rails.application.configure do
     allow do
       origins '*'
       resource '/api/v1/widget/*', headers: :any, methods: [:get, :post, :patch, :put, :options]
+      resource '/public/api/*', headers: :any, methods: [:get, :post, :patch, :put, :options]
+      resource '/api/*', headers: :any, methods: [:get, :post, :patch, :put, :options]
     end
   end
 end

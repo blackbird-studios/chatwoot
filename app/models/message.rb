@@ -49,13 +49,17 @@ class Message < ApplicationRecord
     cards: 5,
     form: 6,
     article: 7,
-    incoming_email: 8
+    incoming_email: 8,
+    input_csat: 9
   }
   enum status: { sent: 0, delivered: 1, read: 2, failed: 3 }
   # [:submitted_email, :items, :submitted_values] : Used for bot message types
   # [:email] : Used by conversation_continuity incoming email messages
   # [:in_reply_to] : Used to reply to a particular tweet in threads
-  store :content_attributes, accessors: [:submitted_email, :items, :submitted_values, :email, :in_reply_to, :deleted], coder: JSON
+  # [:deleted] : Used to denote whether the message was deleted by the agent
+  # [:external_created_at] : Can specify if the message was created at a different timestamp externally
+  store :content_attributes, accessors: [:submitted_email, :items, :submitted_values, :email, :in_reply_to, :deleted,
+                                         :external_created_at], coder: JSON
 
   store :external_source_ids, accessors: [:slack], coder: JSON, prefix: :external_source_id
 
@@ -75,13 +79,14 @@ class Message < ApplicationRecord
   belongs_to :sender, polymorphic: true, required: false
 
   has_many :attachments, dependent: :destroy, autosave: true, before_add: :validate_attachments_limit
+  has_one :csat_survey_response, dependent: :destroy
 
   after_create :reopen_conversation,
                :notify_via_mail
 
   after_create_commit :execute_after_create_commit_callbacks
 
-  after_update :dispatch_update_event
+  after_update_commit :dispatch_update_event
 
   def channel_token
     @token ||= inbox.channel.try(:page_access_token)
