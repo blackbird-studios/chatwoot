@@ -1,13 +1,13 @@
 {
-  "application.js": "/packs/js/application-d86de18319e502a7d719.js",
-  "application.js.map": "/packs/js/application-d86de18319e502a7d719.js.map",
+  "application.js": "/packs/js/application-86d17f2419563fa88459.js",
+  "application.js.map": "/packs/js/application-86d17f2419563fa88459.js.map",
   "entrypoints": {
     "application": {
       "js": [
-        "/packs/js/application-d86de18319e502a7d719.js"
+        "/packs/js/application-86d17f2419563fa88459.js"
       ],
       "js.map": [
-        "/packs/js/application-d86de18319e502a7d719.js.map"
+        "/packs/js/application-86d17f2419563fa88459.js.map"
       ]
     },
     "sdk": {
@@ -20,26 +20,26 @@
     },
     "superadmin_pages": {
       "js": [
-        "/packs/js/superadmin_pages-d86de18319e502a7d719.js"
+        "/packs/js/superadmin_pages-86d17f2419563fa88459.js"
       ],
       "js.map": [
-        "/packs/js/superadmin_pages-d86de18319e502a7d719.js.map"
+        "/packs/js/superadmin_pages-86d17f2419563fa88459.js.map"
       ]
     },
     "superadmin": {
       "js": [
-        "/packs/js/superadmin-d86de18319e502a7d719.js"
+        "/packs/js/superadmin-86d17f2419563fa88459.js"
       ],
       "js.map": [
-        "/packs/js/superadmin-d86de18319e502a7d719.js.map"
+        "/packs/js/superadmin-86d17f2419563fa88459.js.map"
       ]
     },
     "widget": {
       "js": [
-        "/packs/js/widget-d86de18319e502a7d719.js"
+        "/packs/js/widget-86d17f2419563fa88459.js"
       ],
       "js.map": [
-        "/packs/js/widget-d86de18319e502a7d719.js.map"
+        "/packs/js/widget-86d17f2419563fa88459.js.map"
       ]
     }
   },
@@ -48,8 +48,8 @@
   "media/dashboard/assets/images/channels/facebook.png": "/packs/media/dashboard/assets/images/channels/facebook-a6b128f68acf2d76b41a2220fa035250.png",
   "media/dashboard/assets/images/channels/facebook_login.png": "/packs/media/dashboard/assets/images/channels/facebook_login-7692d6c379288885d619b1e80bb214a4.png",
   "media/dashboard/assets/images/channels/line.png": "/packs/media/dashboard/assets/images/channels/line-6c4fad9f00eb3796397246b91f4c6b70.png",
+  "media/dashboard/assets/images/channels/sms.png": "/packs/media/dashboard/assets/images/channels/sms-99d9ede6d8879df79ba4768c20c35bee.png",
   "media/dashboard/assets/images/channels/telegram.png": "/packs/media/dashboard/assets/images/channels/telegram-c098afe3a464bed8ad5337d4cee490b7.png",
-  "media/dashboard/assets/images/channels/twilio.png": "/packs/media/dashboard/assets/images/channels/twilio-71bb773085a13b6d086b79a50e6fde84.png",
   "media/dashboard/assets/images/channels/twitter.png": "/packs/media/dashboard/assets/images/channels/twitter-f7bb5bf512cea46241b7c3618c4d94ae.png",
   "media/dashboard/assets/images/channels/website.png": "/packs/media/dashboard/assets/images/channels/website-754e87fb4b13b9cdd77e2800a0241b05.png",
   "media/dashboard/assets/images/channels/whatsapp.png": "/packs/media/dashboard/assets/images/channels/whatsapp-4936fb8a94148593afdb3dc1305ad7a7.png",
@@ -82,10 +82,10 @@
   "media/widget/assets/images/typing.gif": "/packs/media/widget/assets/images/typing-6027d21b24f45e3377a729a55158f948.gif",
   "sdk.js": "/packs/js/sdk.js",
   "sdk.js.map": "/packs/js/sdk.js.map",
-  "superadmin.js": "/packs/js/superadmin-d86de18319e502a7d719.js",
-  "superadmin.js.map": "/packs/js/superadmin-d86de18319e502a7d719.js.map",
-  "superadmin_pages.js": "/packs/js/superadmin_pages-d86de18319e502a7d719.js",
-  "superadmin_pages.js.map": "/packs/js/superadmin_pages-d86de18319e502a7d719.js.map",
-  "widget.js": "/packs/js/widget-d86de18319e502a7d719.js",
-  "widget.js.map": "/packs/js/widget-d86de18319e502a7d719.js.map"
+  "superadmin.js": "/packs/js/superadmin-86d17f2419563fa88459.js",
+  "superadmin.js.map": "/packs/js/superadmin-86d17f2419563fa88459.js.map",
+  "superadmin_pages.js": "/packs/js/superadmin_pages-86d17f2419563fa88459.js",
+  "superadmin_pages.js.map": "/packs/js/superadmin_pages-86d17f2419563fa88459.js.map",
+  "widget.js": "/packs/js/widget-86d17f2419563fa88459.js",
+  "widget.js.map": "/packs/js/widget-86d17f2419563fa88459.js.map"
 }

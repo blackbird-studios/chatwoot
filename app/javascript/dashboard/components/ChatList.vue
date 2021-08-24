@@ -14,6 +14,14 @@
       class="tab--chat-type"
       @chatTabChange="updateAssigneeTab"
     />
+    <woot-button
+      v-if="isSMSInbox"
+      variant="clear"
+      size="expanded"
+      @click="newSMSConversation"
+    >
+      Make New Conversation
+    </woot-button>
 
     <p v-if="!chatListLoading && !conversationList.length" class="content-box">
       {{ $t('CHAT_LIST.LIST.404') }}
@@ -64,6 +72,7 @@ import ConversationCard from './widgets/conversation/ConversationCard';
 import timeMixin from '../mixins/time';
 import conversationMixin from '../mixins/conversations';
 import wootConstants from '../constants';
+import endPoints from '../api/endPoints';
 
 export default {
   components: {
@@ -113,6 +122,9 @@ export default {
         };
       });
     },
+    newTab() {
+      return [{ key: 'new', name: 'New', count: null }];
+    },
     inbox() {
       return this.$store.getters['inboxes/getInbox'](this.activeInbox);
     },
@@ -125,6 +137,17 @@ export default {
       return this.$store.getters['conversationPage/getHasEndReached'](
         this.activeAssigneeTab
       );
+    },
+    isSMSInbox() {
+      const store = this.$store;
+      const smsInboxes = store.getters['inboxes/getInboxes'].filter(i => {
+        return i.phone_number !== null;
+      });
+      const activeIsSMS = smsInboxes.filter(i => {
+        return i.id === this.activeInbox;
+      });
+      console.log({ store, smsInboxes, thus: this, actives: this.activeInbox });
+      return activeIsSMS.length > 0;
     },
     conversationFilters() {
       return {
@@ -188,6 +211,15 @@ export default {
     });
   },
   methods: {
+    newSMSConversation() {
+      const inbox = this.activeInbox;
+      const me = this;
+      const accountId = this.$store.getters.getCurrentAccountId;
+      console.log({ inbox, me });
+      const createContact = async () => {
+        return axios.post(`/api/v1/accounts/${accountId}/contacts`);
+      };
+    },
     resetAndFetchData() {
       this.$store.dispatch('conversationPage/reset');
       this.$store.dispatch('emptyAllConversations');
